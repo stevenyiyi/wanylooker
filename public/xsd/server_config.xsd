@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="config">
+		<xs:annotation>
+			<xs:documentation>root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="server_ports">
+					<xs:annotation>
+						<xs:documentation>服务器端口</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="http" use="required">
+							<xs:annotation>
+								<xs:documentation>HTTP服务端口</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:integer">
+									<xs:minInclusive value="8088"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="rtsp" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>RTSP服务端口</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="rtmp" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>RTMP[服务端口</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="sip" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>SIP服务端口</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="rtp_rtcp" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>RTP/RTP_TCP服务端口</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="fastcgi">
+					<xs:annotation>
+						<xs:documentation>FASTCGI配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="service">
+								<xs:annotation>
+									<xs:documentation>服务端，相对于WEB SERVER</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="service_path" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>服务路径，可以是IP:PORT格式或UNIX域名格式：/tmp/fcgi_nebula_service.sock</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="live_path" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>直播目录</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="client">
+								<xs:annotation>
+									<xs:documentation>客户端。相对于app service</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="uri" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>app service FASTCGI连接地址，格式为：fcgi://ip:port 或fcgi://unix:/tmp/xxxx.sock(UNIX域名格式）</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="enable_authorizer" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>是否激活FASTCGI authorizer</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="enable_filter" type="xs:boolean">
+										<xs:annotation>
+											<xs:documentation>是否激活FASTCGI filtetr</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="rtsp">
+					<xs:annotation>
+						<xs:documentation>rtsp 配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="using_rtp_ts" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>对于RTSP播放流是否统一采用RTP TS格式传输</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="chunk_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>chunk大小</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="max_rtsp_head_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>最大的RTSP头部</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="session_timeout" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>RTSP session无活动的时间段，单位秒。</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="fragment">
+					<xs:annotation>
+						<xs:documentation>文件 分片设置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rate_limiting">
+								<xs:annotation>
+									<xs:documentation>分片文件发送限速</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="kbps" type="xs:integer" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>每秒钟发送的最大速率，单位：kbps,默认2000kbps</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="enable" type="xs:boolean" use="required">
+										<xs:annotation>
+											<xs:documentation>是否激活限速</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="chunk_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>发送分片文件时的chunk size，默认16384</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="live_fragment_number" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>活动的文件分片数，至少3个片数，默认3</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="max_cache_block_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>文件分片最大缓存块大小，单位MB，默认2MB</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="record_duration" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>直播录像文件的间隔时间，单位秒，默认120秒</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="storage_directory" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>录像文件的存放目录</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="sip">
+					<xs:annotation>
+						<xs:documentation>SIP服务配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="bind_addys">
+								<xs:annotation>
+									<xs:documentation>服务绑定的IP地址列表</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="addr" type="xs:string" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>固定外网IP</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="server_code" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>SIP服务器编码</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="max_heart_beat_delay" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>SIP UAC存活最大的时间间隔：默认120秒</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="http">
+					<xs:annotation>
+						<xs:documentation>HTTP服务配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="chunk_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>发送时CHUNK 大小，当内容超过时，会以HTTP CHUNK的方式进行发送。默认值:8192</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="max_http_head_size" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>最大的HTTP头部大小，默认值：8192</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="max_ws_heart_beat_delay" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>WEB SOCKET客户连接时最大的空闲时间段，单位秒，默认:120秒</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="log">
+					<xs:annotation>
+						<xs:documentation>日志配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="enable_debug" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>激活debug</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="enable_verbose" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>激活verbose</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="enable_info" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>激活info信息</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="app_service_ips">
+					<xs:annotation>
+						<xs:documentation>app service服务器IP列表</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="address" type="xs:string" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>IP地址</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="domain" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>服务器域名</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="use_daemon" use="required">
+				<xs:annotation>
+					<xs:documentation>是否以后台方式运行</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="use_app_authencate" use="required">
+				<xs:annotation>
+					<xs:documentation>是否启用app service认证</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

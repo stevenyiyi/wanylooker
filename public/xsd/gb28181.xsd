@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="deviceIDType">
+		<xs:annotation>
+			<xs:documentation>设备编码类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:ID">
+			<xs:pattern value="(\d{2}|\d{4}|\d{6}|\d{8}|\d{20})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="statusType">
+		<xs:annotation>
+			<xs:documentation>状态类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ON"/>
+			<xs:enumeration value="OFF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="resultType">
+		<xs:annotation>
+			<xs:documentation>结果类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="ERROR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PTZType">
+		<xs:annotation>
+			<xs:documentation>控制码类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="recordType">
+		<xs:annotation>
+			<xs:documentation>录像控制类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Record"/>
+			<xs:enumeration value="StopRecord"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="guardType">
+		<xs:annotation>
+			<xs:documentation>布防/撤防控制类型</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SetGuard"/>
+			<xs:enumeration value="ResetGuard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="itemType">
+		<xs:annotation>
+			<xs:documentation>设备目录项类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeviceID" type="deviceIDType">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统编码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Manufacturer" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>当为设备时，设备厂商</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Model" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>当为设备时，设备型号</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Owner" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>当为设备时，设备归属</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CivilCode">
+				<xs:annotation>
+					<xs:documentation>行政区域</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Block" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>警区</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>当为设备时，安装地址</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Parental">
+				<xs:annotation>
+					<xs:documentation>当为设备时，晃否是子设备中1--有 0--没有</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ParentID" type="deviceIDType">
+				<xs:annotation>
+					<xs:documentation>你设备/区域/系统编码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SafetyWay" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 信令安全模式(可选)缺省为0; 0:不采用; 2: S/MIME签名方式; 3: S/ MIME加密签名同时采用方式; 4:数字摘要方式</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RegisterWay" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>注册方式(必选)缺省为1;1:符合IETFRFC3261标准的认证注册模 式; 2:基于口令的双向认证注册模式; 3:基于数字证书的双向认证注册模式</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CertNum" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>证书序列号(有证书的设备必选</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Certifiable" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>证书有效标识(有证书的设备必选)缺省为0;证书有效标识:0:无效1: 有效</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ErrCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 无效原因码(有证书且证书无效的设备必选)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EndTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 证书终止有效期(有证书的设备必选</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secrecy">
+				<xs:annotation>
+					<xs:documentation> 保密属性(必选)缺省为0; 0:不涉密, 1:涉密</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IPAddress" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 设备/区域/系统IP地址(可选)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Port" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统端口(可选)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Password" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> 设备口令(可选)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="statusType">
+				<xs:annotation>
+					<xs:documentation>设备状态(必选)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Longitude" type="xs:double" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>经度</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Latidute" type="xs:double" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>纬度</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Info">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PTZType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机类型扩展,标识摄像机类型: 1 -球机; 2 -半球; 3 -固定枪机; 4 -遥控枪 机。当目录项为摄像机时可选</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="PositionType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机位置类型扩展。1 -省际检查站、 2 -党政机关、 3 -车站码头、 4 -中心广 场、 5 -体育场馆、 6 -商业中心、 7 -宗教场所、 8 -校园周边、 9 -治安复杂区域、 10 -交通 干线。当目录项为摄像机时可选</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="RoomType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机安装位置室外、室内属性。1 -室外、 2 -室内。当目录项为摄像机时可 选,缺省为1</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="UseType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机用途属性。1 -治安、 2 -交通、 3 -重点。当目录项为摄像机时可选。可选,缺省为1。</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SupplyLightType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机补光属性。1 -无补光、 2 -红外补光、 3 -白光补光。当目录项为摄像机 时可选,缺省为1</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DirectionType" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机监视方位属性。1 -东、 2 -西、 3 -南、 4 -北、 5 -东南、 6 -东北、 7 -西南、 8 -西 北。当目录项为摄像机时且为固定摄像机或设置看守位摄像机时可选</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Resolution" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-摄像机支持的分辨率,可有多个分辨率值,各个取值间以“ /”分隔。分辨率 取值参见附录F中SDPf字段规定。当目录项为摄像机时可选</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="BusinessGroupID" type="deviceIDType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>-虚拟组织所属的业务分组ID,业务分组根据特定的业务需求制定,一个业 务分组包含一组特定的虚拟组织</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DownloadSpeed" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>下载倍速范围(可选),各可选参数以“ /”分隔,如设备支持1, 2, 4倍速下 载则应写为“ 1/2/4” </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SVCSpaceSupportMode" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>空域编码能力,取值0:不支持; 1: 1级增强( 1个增强层); 2: 2级增强
+( 2个增强层); 3: 3级增强( 3个增强层)(可选) </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SVCTimeSupportMode" type="xs:integer" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation> 时域编码能力,取值0:不支持; 1: 1级增强; 2: 2级增强; 3: 3级增强(可 选) -</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="itemFileType">
+		<xs:annotation>
+			<xs:documentation>文件目录项类型</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DeviceID" type="deviceIDType">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统编码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统名称</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FilePath" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>文件路径名</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像地址</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StartTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像开始时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EndTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像结束时间</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secrecy">
+				<xs:annotation>
+					<xs:documentation>保密属性(必选)缺省为0; 0:不涉密, 1:涉密</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Type" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像产生类型(可选) time或alarm或manua </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecordID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像触发者ID(可选）</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileSize" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>录像文件大小,单位: Byte(可选）</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

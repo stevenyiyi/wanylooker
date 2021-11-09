@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Notify">
+		<xs:annotation>
+			<xs:documentation>root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="Catalog">
+					<xs:annotation>
+						<xs:documentation>命令类型:目录变化通知(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation> 主设备编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SumNum" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>目录变化的总数</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DeviceList">
+					<xs:annotation>
+						<xs:documentation>变化的设备目录列表</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Item" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DeviceID" type="deviceIDType">
+											<xs:annotation>
+												<xs:documentation>子设备编码</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Event">
+											<xs:annotation>
+												<xs:documentation>设备状态 ON-设备在线 IPCHANGE-设备IP端口改变 OFF-设备下线</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ON"/>
+													<xs:enumeration value="IPCHANGE"/>
+													<xs:enumeration value="OFF"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Contact" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>SIP Contact 仅Event为IPCHANGE时必须</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Num" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>Item个数</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="Response">
+		<xs:annotation>
+			<xs:documentation>设备目录查询返回结果</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CmdType" type="xs:string" fixed="catalog">
+				<xs:annotation>
+					<xs:documentation>命令类型</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SN">
+				<xs:annotation>
+					<xs:documentation>命令序列号</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DeviceID">
+				<xs:annotation>
+					<xs:documentation>设备/区域/系统编码</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SumNum">
+				<xs:annotation>
+					<xs:documentation>查询结果总数</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeviceList" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>设备目录项列表，Num表示目录项个数</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="Item" type="itemType"/>
+					</xs:choice>
+					<xs:attribute name="Num" type="xs:integer"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Info" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>扩展信息，可多项</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="1024"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

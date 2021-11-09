@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Response">
+		<xs:annotation>
+			<xs:documentation>设备状态信息查询应答</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="DeviceStatus">
+					<xs:annotation>
+						<xs:documentation>命令类型</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation>设备ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Result" type="resultType">
+					<xs:annotation>
+						<xs:documentation>执行结果</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Online">
+					<xs:annotation>
+						<xs:documentation>是否在线</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="ONLINE"/>
+							<xs:enumeration value="OFFLINE"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Status" type="resultType">
+					<xs:annotation>
+						<xs:documentation>是否正常工作</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Reason" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>不正常工作原因</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Encode" type="statusType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>是否编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Record" type="statusType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>是否录像</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DeviceTime" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>设备时间和日期</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Alarmstatus" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>报警设备状态列表 num表示项目个数</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Item" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DeviceID" type="deviceIDType">
+											<xs:annotation>
+												<xs:documentation>报警设备编码</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="DutyStatus">
+											<xs:annotation>
+												<xs:documentation>报警设备状态</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="ONDUTY"/>
+													<xs:enumeration value="OFFDUTY"/>
+													<xs:enumeration value="ALARM"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="num" type="xs:integer" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Info" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>扩展信息，可多项</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="1024"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

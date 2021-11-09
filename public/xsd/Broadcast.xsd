@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Notify">
+		<xs:annotation>
+			<xs:documentation>root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="Broadcast">
+					<xs:annotation>
+						<xs:documentation>命令类型:语音广播通知(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="SourceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation>语音输入设备的设备编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="TargetID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation>语音输出设备的设备编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

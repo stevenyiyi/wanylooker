@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Notify">
+		<xs:annotation>
+			<xs:documentation>root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="MobilePosition">
+					<xs:annotation>
+						<xs:documentation>命令类型:移动设备位置数据通知(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation> 设备编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Time" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>产生通知的时间</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Longitude" type="xs:double">
+					<xs:annotation>
+						<xs:documentation>经度</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Latitude" type="xs:double">
+					<xs:annotation>
+						<xs:documentation>纬度</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Speed" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>速度,单位: km/h(可选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Direction" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>方向, 取值为当前摄像头方向与正北方的顺时针夹角, 取值范围0 °~3 6 0 °, 单位: ( °) ( 可选) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Altitude" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>海拔高度,单位: m(可选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

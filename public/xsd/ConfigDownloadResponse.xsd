@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 被2012 () 使用XMLSpy v编辑的 (http://www.altova.com) by -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Response">
+		<xs:annotation>
+			<xs:documentation>设备配置查询应答</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="ConfigDownload">
+					<xs:annotation>
+						<xs:documentation>命令类型</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation>设备ID</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Result" type="resultType">
+					<xs:annotation>
+						<xs:documentation>执行结果</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="BasicParam" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>基本参数</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Name" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>设备名称</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Expiration" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>注册过期时间</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="HeartBeatInterval" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>心跳间隔时间</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="HeartBeatCount" type="xs:integer">
+								<xs:annotation>
+									<xs:documentation>心跳超时次数</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PositionCapability" type="xs:integer" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>-定位功能支持情况。取值: 0 -不支持; 1 -支持GPS定位; 2 -支持北斗定位(可选, 默认取值为0</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Longitude" type="xs:double" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>经度</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Latidute" type="xs:double" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>纬度</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="VideoParamOpt" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>视频参数范围(可选),各可选参数以“ /”分隔</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DownloadSpeed" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>下载倍速范围(可选),各可选参数以“ /”分隔,如设备支持1, 2, 4倍速下载则应 写为"1/2/4"</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Resolution" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>-摄像机支持的分辨率(可选),可有多个分辨率值,各个取值间以“ /”分隔。分辨率取值参见附录F中SDPf字段规定</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SVCEncodeConfig" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>SVC编码配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ROIParam">
+								<xs:annotation>
+									<xs:documentation>感兴趣区域参数</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ROIFlag" type="xs:integer">
+											<xs:annotation>
+												<xs:documentation> 感兴趣区域开关,取值0:关闭, 1:打开(必选)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ROINumber" type="xs:integer">
+											<xs:annotation>
+												<xs:documentation>感兴趣区域数量,取值范围0~16</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Item" minOccurs="0" maxOccurs="unbounded">
+											<xs:annotation>
+												<xs:documentation>感兴趣区域</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:choice>
+													<xs:element name="ROISeq" type="xs:integer">
+														<xs:annotation>
+															<xs:documentation>感兴趣区域编号,取值范围1~16(必选)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="TopLeft" type="xs:integer">
+														<xs:annotation>
+															<xs:documentation> 感兴趣区域左上角坐标,参考GB/T25724—2010的5. 2. 4. 4. 2 定义,取值范围0~19683(必选)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="BottomRight" type="xs:integer">
+														<xs:annotation>
+															<xs:documentation>感兴趣区域右下角坐标,参考GB/T25724—2010的5. 2. 4. 4. 2 定义,取值范围0~19683(必选) </xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ROIQP" type="xs:integer">
+														<xs:annotation>
+															<xs:documentation>ROI区域编码质量等级,取值0:一般, 1:较好, 2:好, 3:很好(必 选)</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="BackgroundQP" type="xs:integer">
+											<xs:annotation>
+												<xs:documentation>背景区域编码质量等级,取值0:一般, 1:较好, 2:好, 3:很好(必选)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="BackGroundSkipFlag" type="xs:integer">
+											<xs:annotation>
+												<xs:documentation>背景跳过开关,取值0:关闭, 1:打开(必选)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="SVCParam" minOccurs="0"/>
+							<xs:element ref="SuveillanceParam" minOccurs="0"/>
+							<xs:element name="AudioParam" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>音频参数</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="AudioRecognitionFlag" type="xs:integer"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SVACDecodeConfig" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>SVAC解码配置</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="SVCParam"/>
+							<xs:element ref="SuveillanceParam"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SVCParam">
+		<xs:annotation>
+			<xs:documentation>SVC参数</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SVCSpaceDomainMode" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>1: 1级增强( 1个增强层); 2: 2级增强
+( 2个增强层); 3: 3级增强( 3个增强层)(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SVCTimeDomainMode" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation> 时域编码方式,取值0:基本层; 1: 1级增强; 2: 2级增强; 3: 3级增强(必 选)  </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SVCSpaceSupportMode" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation> 空域编码能力,取值0:不支持; 1: 1级增强( 1个增强层); 2: 2级增强
+( 2个增强层); 3: 3级增强( 3个增强层)(必选</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SVCTimeSupportMode" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation> 时域编码能力,取值0:不支持; 1: 1级增强; 2: 2级增强; 3: 3级增强(必 选) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SuveillanceParam">
+		<xs:annotation>
+			<xs:documentation>-监控专用信息参数(可选)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TimeFlag">
+					<xs:annotation>
+						<xs:documentation>绝对时间信息开关,取值0:关闭, 1:打开(必选)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer"/>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="EventFlag" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>监控事件信息开关,取值0:关闭, 1:打开(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AlertFlag" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>报警信息开关,取值0:关闭, 1:打开(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

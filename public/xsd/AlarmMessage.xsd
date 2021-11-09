@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="gb28181.xsd"/>
+	<xs:element name="Notify">
+		<xs:annotation>
+			<xs:documentation>root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CmdType" type="xs:string" fixed="Alarm">
+					<xs:annotation>
+						<xs:documentation>命令类型:报警通知(必选)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SN">
+					<xs:annotation>
+						<xs:documentation>命令序列号</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DeviceID" type="deviceIDType">
+					<xs:annotation>
+						<xs:documentation> 报警设备编码或报警中心编码</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AlarmPriority" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>报警级别(必选), 1为一级警情, 2为二级警情, 3为三级警情, 4为四级警情</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AlarmMethod" type="xs:integer">
+					<xs:annotation>
+						<xs:documentation>报警方式(必选),取值1为电话报警, 2为设备报警, 3为短信报警, 4为GPS报警, 5为 视频报警, 6为设备故障报警, 7其他报警</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AlarmTime" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>报警时间</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AlarmDescription" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>报警内容描述</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Longitude" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>经度</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Latitude" type="xs:double" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>纬度</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Info" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>扩展I n f o项携带报警类型、报警类型参数字段</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AlarmType" type="xs:positiveInteger">
+								<xs:annotation>
+									<xs:documentation>a rmType为默认的报警设备报警,携
+带Al a rmType取值及对应报警类型如下: 1 -视频丢失报警; 2 -设备防拆报警; 3 -存储 设备磁盘满报警; 4 -设备高温报警; 5 -设备低温报警。报警方式为5时,取值如下: 1 人工视频报警; 2 -运动目标检测报警; 3 -遗留物检测报警; 4 -物体移除检测报警; 5 -绊线检测报警; 6 -入侵检测报警; 7 -逆行检测报警; 8 -徘徊检测报警; 9 -流量统计报警; 10 -密度检测报警; 11 -视频异常检测报警; 12 -快速移动报警。报警方式为6时,取值 如下: 1 -存储设备磁盘故障报警; 2 -存储设备风扇故障报警。</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="AlarmTypeParam" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>报警类型扩展参数。在入侵检测报警时</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="EventType" type="xs:positiveInteger">
+											<xs:annotation>
+												<xs:documentation>事件类型 1 -进入区域; 2 -离开区域</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
