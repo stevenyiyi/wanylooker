@@ -1,7 +1,7 @@
 {
-  "name": "anylooker-web",
+  "name": "wanylooker",
   "version": "1.0.0",
-  "description": "anylooker main page",
+  "description": "",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
