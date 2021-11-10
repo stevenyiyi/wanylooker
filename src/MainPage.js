@@ -7,7 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   content: {
     width: "100%", // Fix IE 11 issue.
     paddingLeft: theme.spacing(2),
@@ -90,7 +90,7 @@ export default function MainPage() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {rows.map((row) => (
             <TableRow key={row.no}>
               <TableCell component="th" scope="row">
                 {row.no}

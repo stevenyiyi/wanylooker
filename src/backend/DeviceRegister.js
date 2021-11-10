@@ -17,7 +17,7 @@ import Data201907 from "./201907.json";
 import GBT2260 from "./gbt2260.js";
 import AsyncFetch from "../utils/AsyncFetch";
 import browserCookies from "browser-cookies";
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap"
@@ -78,7 +78,7 @@ export default function DeviceRegister(props) {
   }
 
   const gb2260 = new GBT2260("201907", Data201907);
-  const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     let cval = event.target.value;
     console.log("handleChange=>name:" + name + " value:" + cval);
     if (name === "children") cval = Number(cval);
@@ -91,11 +91,11 @@ export default function DeviceRegister(props) {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const handleMouseDownPassword = event => {
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  const handleBlur = name => event => {
+  const handleBlur = (name) => (event) => {
     if (name === "children") {
       if (values.children <= 0) {
         setValues({ ...values, [name]: 1 });
@@ -105,7 +105,7 @@ export default function DeviceRegister(props) {
     }
   };
 
-  const handleRegister = event => {
+  const handleRegister = (event) => {
     console.log("onclick");
     let uid = browserCookies.get("username");
     if (!uid) {
@@ -155,7 +155,7 @@ export default function DeviceRegister(props) {
       children: values.children
     };
     AsyncFetch("/sapling/register_device", rparams, "POST")
-      .then(response => {
+      .then((response) => {
         let result = response.result;
         if (result !== 0) {
           showPopper("注册设备错误！");
@@ -165,13 +165,13 @@ export default function DeviceRegister(props) {
           showPopper("注册设备成功,请到“我的设备”中查看详细信息!");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         showPopper("网络出了点问题！");
       });
   };
 
   function genProvinceOptions() {
-    let pns = gb2260.provinces().map(d => (
+    let pns = gb2260.provinces().map((d) => (
       <option key={d.code} value={d.code}>
         {d.name}
       </option>
@@ -183,7 +183,7 @@ export default function DeviceRegister(props) {
 
   function genPrefectures(provinceCode) {
     if (!provinceCode) return <option value="" />;
-    let pfs = gb2260.prefectures(provinceCode).map(d => (
+    let pfs = gb2260.prefectures(provinceCode).map((d) => (
       <option key={d.code} value={d.code}>
         {d.name}
       </option>
@@ -197,7 +197,7 @@ export default function DeviceRegister(props) {
   function genCounties(prefectureCode) {
     if (!prefectureCode || !prefectureCode.endsWith("00"))
       return <option value="" />;
-    let cts = gb2260.counties(prefectureCode).map(d => (
+    let cts = gb2260.counties(prefectureCode).map((d) => (
       <option key={d.code} value={d.code}>
         {d.name}
       </option>

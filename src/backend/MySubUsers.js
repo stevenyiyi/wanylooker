@@ -655,8 +655,8 @@ export default function MySubUsers(props) {
         nextIconButtonProps={{
           "aria-label": "next page"
         }}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
       {openEdit && (
         <ModifyUserDialog
